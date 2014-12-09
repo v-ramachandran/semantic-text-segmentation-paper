@@ -1,51 +1,82 @@
 \documentclass{sig-alternate}
+\usepackage{amsmath,amsfonts}
+\usepackage[ruled,vlined]{algorithm2e}
 
 \begin{document}
 
-\title{Semantic Text Segmentation with Sentence Vectors}
+  \title{Semantic Text Segmentation with Sentence Vectors}
 
-\numberofauthors{2}
-\author{
-\alignauthor Venketaram Ramachandran\\
-       \affaddr{Department of Computer Science}\\
-       \affaddr{University of Texas at Austin}\\
-       \email{venket@cs.utexas.edu}
-\alignauthor Ankita De\\
-       \affaddr{Department of Computer Science}\\
-       \affaddr{University of Texas at Austin}\\
-       \email{ankitade@cs.utexas.edu}
-}
+  \numberofauthors{2}
+  \author{
+  \alignauthor Venketaram Ramachandran\\
+  \affaddr{Department of Computer Science}\\
+  \affaddr{University of Texas at Austin}\\
+  \email{venket@cs.utexas.edu}
+  \alignauthor Ankita De\\
+  \affaddr{Department of Computer Science}\\
+  \affaddr{University of Texas at Austin}\\
+  \email{ankitade@cs.utexas.edu}
+  }
 
-\date{8 December 2014}
-\maketitle
-\begin{abstract}
-0. Present a novel approach to cluster documents in a text (possible online)
-1. Approach extends ParagraphVector
-2.
-\end{abstract}
+  \date{8 December 2014}
+  \maketitle
+  \begin{abstract}
+    0. Present a novel approach to cluster documents in a text (possible online)
+    1. Approach extends ParagraphVector
+    2.
+  \end{abstract}
 
-\category{I.2.7}{Artificial Intelligence}{Natural Language Processing}[Language models, Text analysis]
-\category{I.5.4}{Pattern Recognition}{Application}[Text processing]
+  \category{I.2.7}{Artificial Intelligence}{Natural Language Processing}[Language models, Text analysis] \\
+  \category{I.5.4}{Pattern Recognition}{Application}[Text processing]
 
-\terms{Theory}
+  \terms{Theory}
 
-\keywords{neural networks, text segmentation, semantic sentence representation}
+  \keywords{neural networks, text segmentation, semantic sentence representation}
 
-\section{Introduction}
-\section{Background}
-\section{Methodology}
-\subsection{Architecture}
-\subsection{Sentence Representation}
-\subsection{Clustering Algorithm}
-\subsection{Online Application}
-\section{Experimental Setup}
-\subsection{Datasets}
-\subsection{Comparison Technique}
-\subsection{Evaluation Methodology}
-\subsubsection{\(P_k\)}
-\subsubsection{WindowDiff}
-\section{Results}
-\subsection{Discussion}
-\section{Future Work}
-\section{Conclusion}
+  \section{Introduction}
+  \section{Background}
+  \section{Methodology}
+  \subsection{Architecture}
+  \subsection{Sentence Representation}
+  \subsection{Clustering Algorithm}
+
+  Algorithm 1 describes the proposed clustering algorithm.
+
+  \begin{algorithm}
+    \caption{\textsc {Generate-Prototype-Clusters} \label{IR2}}
+    \SetKw{KwInitialize}{Initialize:}
+    \KwIn{vector conversion function \(\sigma\), similarity threshold \(t\)}
+    \KwOut{A set of \{Prototype, Cluster\} pairs. }
+    \KwInitialize{Output Set \(\alpha = \{\}\),
+    \(prototype_{current}=0\),\(cluster_{current}=\{\} \)} \\
+    \Begin{
+    \For{each answer input a}{
+    \(v=\sigma(a)\) \\
+    \(\phi=\)cosine similarity between v and \(prototype_{current}\) \\
+    \If{\(\phi < t\)}{
+    Add v to \(cluster_{current}\) \\
+    Recompute \(prototype_{current}\) as centroid of
+    \(cluster_{current}\)}
+    \Else{
+    Add \{\(prototype_{current},cluster_{current}\)\} to output set.\\
+    \(prototype_{current}=v\) \\
+    \(cluster_{current}=\{v\}\)
+    }
+    }
+    \Return \(\alpha\)
+    }
+  \end{algorithm}
+
+  \subsection{Intuition}
+  \subsection{Online Application}
+  \section{Experimental Setup}
+  \subsection{Datasets}
+  \subsection{Comparison Technique}
+  \subsection{Evaluation Methodology}
+  \subsubsection{\(P_k\)}
+  \subsubsection{WindowDiff}
+  \section{Results}
+  \subsection{Discussion}
+  \section{Future Work}
+  \section{Conclusion}
 \end{document}
